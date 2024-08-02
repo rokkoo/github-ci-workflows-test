@@ -50,8 +50,6 @@ jobs:
 
       - name: Create release branch
         run: |
-          git fetch
-
           git checkout -b $BRANCH_NAME
           git push origin $BRANCH_NAME
         env:
