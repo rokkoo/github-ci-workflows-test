@@ -38,10 +38,6 @@ jobs:
           ./validate-release-version.sh
 
       - name: Increment version based on release type
-        run: |
-          echo "Incrementing version based on release type ${{ github.event.inputs.releaseType }}"
-
-      - name: Increment version based on release type
         id: increment-version
         uses: ./.github/actions/increment-app-version
         with:
