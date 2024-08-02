@@ -25,6 +25,9 @@ runs:
         #!/bin/bash
         set -e
 
+        echo "Branch name: ${{ inputs.branch_name }}"
+        echo "Release type: ${{ inputs.release_type }}"
+
         # Extract major, minor, and patch from the branch name
         IFS='.' read -r major minor patch <<< "${{ inputs.branch_name#release/ }}"
 
