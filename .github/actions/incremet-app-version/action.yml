@@ -1,0 +1,63 @@
+name: Increment Version
+description: Increment version based on release type
+inputs:
+  branch_name:
+    description: "Current branch name"
+    required: true
+    default: "1.0.0"
+  release_type:
+    description: "Type of release"
+    required: true
+    default: "minor"
+    options:
+      - major
+      - minor
+      - patch
+outputs:
+  new_branch_name:
+    description: "New branch name"
+runs:
+  using: "composite"
+  steps:
+    - name: Increment Version
+      id: increment-version
+      run: |
+        #!/bin/bash
+        set -e
+
+        # Extract major, minor, and patch from the branch name
+        IFS='.' read -r major minor patch <<< "${{ inputs.branch_name#release/ }}"
+
+        # Check if the extraction was successful
+        if [[ -z "$major" || -z "$minor" || -z "$patch" ]]; then
+          echo "Failed to parse version from branch name."
+          exit 1
+        fi
+
+        # Increment version based on release type
+        case "${{ inputs.release_type }}" in
+          major)
+            major=$((major + 1))
+            minor=0
+            patch=0
+            ;;
+          minor)
+            minor=$((minor + 1))
+            patch=0
+            ;;
+          patch)
+            patch=$((patch + 1))
+            ;;
+          *)
+            echo "Invalid releaseType value. Expected 'major', 'minor', or 'patch'."
+            exit 1
+            ;;
+        esac
+
+        # Construct new branch name
+        NEW_BRANCH_NAME="release/${major}.${minor}.${patch}"
+        echo "New branch name: ${NEW_BRANCH_NAME}"
+
+        # Set output
+        echo "new_branch_name=${NEW_BRANCH_NAME}" >> $GITHUB_OUTPUT
+      shell: bash
