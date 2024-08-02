@@ -41,11 +41,9 @@ jobs:
         run: |
           if git show-ref --quiet refs/heads/"$BRANCH_NAME" || git show-ref --quiet refs/remotes/origin/"$BRANCH_NAME"; then
             echo "Branch '${BRANCH_NAME}' already exists."
-            echo "exists=true" >> $GITHUB_ENV
             exit 1
           else
             echo "Branch '${BRANCH_NAME}' does not exist."
-            echo "exists=false" >> $GITHUB_ENV
           fi
 
       - name: Create release branch
