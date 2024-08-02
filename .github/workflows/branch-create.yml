@@ -35,8 +35,8 @@ jobs:
         id: increment-version
         uses: ./.github/actions/increment-app-version
         with:
-          branch_name: ${{ github.event.inputs.branch_name }}
-          release_type: ${{ github.event.inputs.release_type }}
+          branch_name: $BRANCH_NAME
+          release_type: $RELEASE_TYPE
 
       - name: Fetch all branches
         run: git fetch --all
