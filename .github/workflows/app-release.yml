@@ -24,7 +24,6 @@ jobs:
       - name: Set up environment variables
         id: setup-env
         run: |
-          echo "LATEST_BRANCH=${{ github.event.inputs.LATEST_BRANCH }}" >> $GITHUB_ENV
           echo "RELEASE_TYPE=${{ github.event.inputs.releaseType }}" >> $GITHUB_ENV
 
       - name: Get latest release branch
@@ -32,6 +31,7 @@ jobs:
         run: |
           # Get the latest release branch based on version
           latest_branch=$(git branch -r | grep "origin/release/" | sort -V | tail -n 1 | sed -E "s|origin/release/||")
+          echo "Latest release branch: ${latest_branch}"
 
           # Set the default branch if no release branch exists
           if [ -z "$latest_branch" ]; then
