@@ -46,7 +46,7 @@ jobs:
         uses: ./.github/actions/increment-app-version
         with:
           LATES_BUILS_NUMBER: $LATEST_BRANCH
-          RELEASE_TYPE: $RELEASE_TYPE
+          RELEASE_TYPE: ${{ github.event.inputs.releaseType }}
 
       - name: Fetch all branches
         run: git fetch --all
