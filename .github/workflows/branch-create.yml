@@ -31,6 +31,11 @@ jobs:
           echo "BRANCH_NAME=${{ github.event.inputs.branch_name }}" >> $GITHUB_ENV
           echo "RELEASE_TYPE=${{ github.event.inputs.releaseType }}" >> $GITHUB_ENV
 
+      - name: validate release version
+        run: |
+          chmod +x validate-release-version.sh        
+          ./validate-release-version.sh
+
       - name: Increment version based on release type
         id: increment-version
         uses: ./.github/actions/increment-app-version
