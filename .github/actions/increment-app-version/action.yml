@@ -1,5 +1,6 @@
 name: Increment Version
 description: Increment version based on release type
+
 inputs:
   branch_name:
     description: "Current branch name"
@@ -13,9 +14,7 @@ inputs:
       - major
       - minor
       - patch
-outputs:
-  new_branch_name:
-    description: "New branch name"
+
 runs:
   using: "composite"
   steps:
@@ -62,5 +61,5 @@ runs:
         echo "New branch name: ${NEW_BRANCH_NAME}"
 
         # Set output
-        echo "new_branch_name=${NEW_BRANCH_NAME}" >> $GITHUB_OUTPUT
+        echo "NEW_BRANCH_NAME=${NEW_BRANCH_NAME}" >> $GITHUB_ENV
       shell: bash
