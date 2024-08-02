@@ -30,17 +30,20 @@ jobs:
         id: get-latest-release
         run: |
           # Get the latest release branch based on version
-          latest_branch=$(git branch -r | grep "origin/release/" | sort -V | tail -n 1 | sed -E "s|origin/release/||")
+          # v. prefix
+          # latest_tag=$(git tag --list 'v*' | sort -V | tail -n 1)
+          latest_tag=$(git tag --list 'release/*' | sort -V | tail -n 1)
+
           echo "Latest release branch: ${latest_branch}"
 
           # Set the default branch if no release branch exists
-          if [ -z "$latest_branch" ]; then
+          if [ -z "$latest_tag" ]; then
             echo "No release branch found."
             exit 1
           fi
 
-          echo "Latest release branch: ${latest_branch}"
-          echo "LATEST_BRANCH=${latest_branch}" >> $GITHUB_ENV
+          echo "Latest release branch: ${latest_tag}"
+          echo "LATEST_BRANCH=${latest_tag}" >> $GITHUB_ENV
 
       - name: validate release version
         run: |
