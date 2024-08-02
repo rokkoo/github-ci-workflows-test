@@ -36,10 +36,10 @@ jobs:
           fi
 
           # Create and checkout the hotfix branch from the tag
-          git checkout -b "$HOTFIX_BRANCH" "$TAG_NAME"
+          git checkout -b $HOTFIX_BRANCH $TAG_NAME
 
           # Push the hotfix branch to the remote repository
-          git push origin "$HOTFIX_BRANCH"
+          git push origin $HOTFIX_BRANCH
         shell: bash
         env:
           SECRET: ${{ secrets.GH_SECRET }}
