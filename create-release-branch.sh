@@ -3,11 +3,11 @@
 set -e
 
 #Check if branch name is provided
-if [ -z "$BRANCH_NAME" ]; then
-  echo "Error: BRANCH_NAME is not set."
+if [ -z "$LATEST_BRANCH" ]; then
+  echo "Error: LATEST_BRANCH is not set."
   exit 1
 fi
 
 #Create a new branch
-git checkout -b $BRANCH_NAME
-git push origin $BRANCH_NAME
+git checkout -b $LATEST_BRANCH
+git push origin $LATEST_BRANCH

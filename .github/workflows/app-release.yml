@@ -3,10 +3,6 @@ name: generate-app-release
 on:
   workflow_dispatch:
     inputs:
-      branch_name:
-        description: "Current version branch name"
-        required: true
-        default: "1.0.0"
       releaseType:
         description: "Release version type"
         required: true
@@ -28,7 +24,7 @@ jobs:
       - name: Set up environment variables
         id: setup-env
         run: |
-          echo "BRANCH_NAME=${{ github.event.inputs.branch_name }}" >> $GITHUB_ENV
+          echo "LATEST_BRANCH=${{ github.event.inputs.LATEST_BRANCH }}" >> $GITHUB_ENV
           echo "RELEASE_TYPE=${{ github.event.inputs.releaseType }}" >> $GITHUB_ENV
 
       - name: Get latest release branch
@@ -56,7 +52,7 @@ jobs:
         id: increment-version
         uses: ./.github/actions/increment-app-version
         with:
-          branch_name: $BRANCH_NAME
+          branch_name: $LATEST_BRANCH
           release_type: $RELEASE_TYPE
 
       - name: Fetch all branches
