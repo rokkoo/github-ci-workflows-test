@@ -16,11 +16,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Git
-        run: |
-          git config --global user.name "test"
-          git config --global user.email "test@test.com"
-
       - name: validate release version
         run: |
           chmod +x validate-release-version.sh        
@@ -28,24 +23,33 @@ jobs:
         env:
           BRANCH_NAME: ${{ github.event.inputs.branch_name }}
 
+      - name: Setup Git
+        run: |
+          git config --global user.name "test"
+          git config --global user.email "test@test.com"
+
+      - name: Se  t up environment variables
+        id: setup-env
+        run: |
+          echo "BRANCH_NAME=release/${{ github.event.inputs.branch_name }}" >> $GITHUB_ENV
+
       - name: Check if branch exists
         id: check-branch
         run: |
-          branch_name="release/${{ github.event.inputs.branch_name }}"
           git fetch --all
 
-          if git branch --list "${{ github.event.inputs.branch_name }}" || git branch -r --list "origin/${{ github.event.inputs.branch_name }}"; then
-            echo "Branch '${{ github.event.inputs.branch_name }}' already exists."
+          if git branch --list "$BRANCH_NAME" || git branch -r --list "origin/$BRANCH_NAME"; then
+            echo "Branch '$BRANCH_NAME' already exists."
             exit 1
           else
-            echo "Branch '${{ github.event.inputs.branch_name }}' does not exist."
+            echo "Branch '$BRANCH_NAME' does not exist."
           fi
 
       - name: Create release branch
         run: |
           git fetch
 
-          git checkout -b release/${{ github.event.inputs.branch_name }}
-          git push origin release/${{ github.event.inputs.branch_name }}
+          git checkout -b $BRANCH_NAME
+          git push origin $BRANCH_NAME
         env:
           SECRET: ${{ secrets.GH_SECRET }}
