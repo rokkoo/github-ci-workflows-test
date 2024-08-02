@@ -28,7 +28,18 @@ jobs:
         env:
           BRANCH_NAME: ${{ github.event.inputs.branch_name }}
 
-          # check if the branch already exists
+      - name: Check if branch exists
+        id: check-branch
+        run: |
+          branch_name="release/${{ github.event.inputs.branch_name }}"
+          if git show-ref --quiet refs/heads/${branch_name}; then
+            echo "Branch '${branch_name}' already exists."
+            echo "exists=true" >> $GITHUB_ENV
+          else
+            echo "Branch '${branch_name}' does not exist."
+            echo "exists=false" >> $GITHUB_ENV
+          fi
+
       - name: Create release branch
         run: |
           git fetch
