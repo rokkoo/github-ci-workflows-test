@@ -39,7 +39,7 @@ jobs:
             exit 1
           fi
 
-          echo "Latest release branch: $latest_branch"
+          echo "Latest release branch: ${latest_branch}"
 
           echo "LATEST_BRANCH=${latest_branch}" >> $GITHUB_ENV
 
