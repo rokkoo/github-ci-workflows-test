@@ -10,7 +10,6 @@ runs:
     - name: Get Latest Release Number
       id: get-latest-release-number
       run: |
-        #!/bin/bash
         set -e
 
         # Get the latest release tag based on version
@@ -30,4 +29,3 @@ runs:
 
         # # Set the environment variable
         # echo "LATEST_BRANCH=${version_number}" >> $GITHUB_ENV
-      shell: bash
