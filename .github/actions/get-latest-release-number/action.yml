@@ -29,3 +29,4 @@ runs:
 
         # # Set the environment variable
         # echo "LATEST_BRANCH=${version_number}" >> $GITHUB_ENV
+      shell: bash
