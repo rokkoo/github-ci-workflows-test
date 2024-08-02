@@ -35,6 +35,8 @@ jobs:
         run: |
           chmod +x validate-release-version.sh        
           ./validate-release-version.sh
+        env:
+          BRANCH_NAME: $BRANCH_NAME
 
       - name: Increment version based on release type
         id: increment-version
