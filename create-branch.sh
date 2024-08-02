@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 
 #Fail on first error
 set -e
@@ -16,6 +16,8 @@ set -e
 #Create a new branch
 # git checkout -b $BRANCH_NAME
 # git push origin $BRANCH_NAME
+
+echo "Current branch: $(git branch --show-current)"
 
 LAST_APP_RELEASE_BRANCH="$(git branch --remote --sort=v:refname | grep release/ | tail -n 1 | sed 's|origin/||' | sed 's| ||g')"
 
