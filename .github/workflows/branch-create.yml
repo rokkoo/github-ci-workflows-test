@@ -21,6 +21,13 @@ jobs:
           git config --global user.name "test"
           git config --global user.email "test@test.com"
 
+      - name: Create new branch
+        run: |
+          chmod +x create-branch.sh        
+          ./validate-release-version.sh
+        env:
+          BRANCH_NAME: ${{ github.event.inputs.branch_name }}
+
       - name: Create release branch
         run: |
           git checkout -b release/${{ github.event.inputs.branch_name }}
