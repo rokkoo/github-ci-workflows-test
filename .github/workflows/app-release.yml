@@ -31,12 +31,26 @@ jobs:
           echo "BRANCH_NAME=${{ github.event.inputs.branch_name }}" >> $GITHUB_ENV
           echo "RELEASE_TYPE=${{ github.event.inputs.releaseType }}" >> $GITHUB_ENV
 
+      - name: Get latest release branch
+        id: get-latest-release
+        run: |
+          # Get the latest release branch based on version
+          latest_branch=$(git branch -r | grep 'origin/release/' | sort -V | tail -n 1 | sed -E 's|origin/release/||')
+
+          # Set the default branch if no release branch exists
+          if [ -z "$latest_branch" ]; then
+            echo "No release branch found.
+            exit 1
+          fi
+
+          echo "Latest release branch: $latest_branch"
+
+          echo "LATEST_BRANCH=${latest_branch}" >> $GITHUB_ENV
+
       - name: validate release version
         run: |
-          chmod +x validate-release-version.sh        
+          chmod +x validate-release-version.sh
           ./validate-release-version.sh
-        env:
-          BRANCH_NAME: ${{ github.event.inputs.branch_name }}
 
       - name: Increment version based on release type
         id: increment-version

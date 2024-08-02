@@ -2,7 +2,7 @@
 
 set -e
 
-version=$BRANCH_NAME
+version=$LATEST_BRANCH
 
 if [[ $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     exit 0
