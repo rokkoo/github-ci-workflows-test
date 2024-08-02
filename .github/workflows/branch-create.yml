@@ -33,7 +33,7 @@ jobs:
 
       - name: Increment version based on release type
         id: increment-version
-        uses: ./.github/actions/increment-version
+        uses: ./.github/actions/increment-app-version
         with:
           branch_name: ${{ github.event.inputs.branch_name }}
           release_type: ${{ github.event.inputs.release_type }}
