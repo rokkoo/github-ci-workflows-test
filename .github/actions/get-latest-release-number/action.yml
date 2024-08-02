@@ -17,10 +17,10 @@ runs:
         version_number=$(echo "$latest_tag" | sed 's/^release\///')
 
         # Set the default branch if no release branch exists
-        if [ -z "$version_number" ]; then
-          echo "No release branch found."
-          exit 1
-        fi
+        # if [ -z "$version_number" ]; then
+        #   echo "No release branch found."
+        #   exit 1
+        # fi
 
         echo "Latest release branch: ${version}"
         echo "LATEST_BRANCH=${version_number}" >> $GITHUB_ENV
