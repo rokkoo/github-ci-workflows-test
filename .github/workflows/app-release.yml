@@ -45,8 +45,8 @@ jobs:
         id: increment-version
         uses: ./.github/actions/increment-app-version
         with:
-          branch_name: $LATEST_BRANCH
-          release_type: $RELEASE_TYPE
+          LATES_BUILS_NUMBER: $LATEST_BRANCH
+          RELEASE_TYPE: $RELEASE_TYPE
 
       - name: Fetch all branches
         run: git fetch --all

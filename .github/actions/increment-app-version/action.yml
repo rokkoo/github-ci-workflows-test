@@ -2,11 +2,10 @@ name: Increment Version
 description: Increment version based on release type
 
 inputs:
-  branch_name:
-    description: "Current branch name"
+  LATES_BUILS_NUMBER:
+    description: "Current tag version"
     required: true
-    default: "1.0.0"
-  release_type:
+  RELEASE_TYPE:
     description: "Type of release"
     required: true
     default: "minor"
@@ -24,11 +23,11 @@ runs:
         #!/bin/bash
         set -e
 
-        echo "Branch name: ${{ inputs.branch_name }}"
-        echo "Release type: ${{ inputs.release_type }}"
+        echo "Branch name: ${{ inputs.RELEASE_TYPE }}"
+        echo "Release type: ${{ inputs.LATES_BUILS_NUMBER }}"
 
         # Extract major, minor, and patch from the branch name
-        IFS='.' read -r major minor patch <<< "${{ inputs.branch_name }}"
+        IFS='.' read -r major minor patch <<< "${{ inputs.LATES_BUILS_NUMBER }}"
 
         # Check if the extraction was successful
         if [[ -z "$major" || -z "$minor" || -z "$patch" ]]; then
@@ -37,7 +36,7 @@ runs:
         fi
 
         # Increment version based on release type
-        case "${{ inputs.release_type }}" in
+        case "${{ inputs.RELEASE_TYPE }}" in
           major)
             major=$((major + 1))
             minor=0
