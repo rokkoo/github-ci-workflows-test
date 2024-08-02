@@ -31,7 +31,7 @@ jobs:
         id: get-latest-release
         run: |
           # Get the latest release branch based on version
-          latest_branch=$(git branch -r | grep 'origin/release/' | sort -V | tail -n 1 | sed -E 's|origin/release/||')
+          latest_branch=$(git branch -r | grep "origin/release/" | sort -V | tail -n 1 | sed -E "s|origin/release/||")
 
           # Set the default branch if no release branch exists
           if [ -z "$latest_branch" ]; then
