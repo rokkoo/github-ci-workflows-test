@@ -32,7 +32,7 @@ jobs:
           # Get the latest release branch based on version
           # v. prefix
           # latest_tag=$(git tag --list 'v*' | sort -V | tail -n 1)
-          latest_tag=$(git tag --list 'release/*' | sort -t'/' -k2V | tail -n 1)
+          latest_tag=$(git ls-remote --tags --sort=committerdate | grep -o 'release/*' | sort -r | head -1)
           # Extract just the version part
           version=${latest_tag#release/}
 
