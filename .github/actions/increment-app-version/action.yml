@@ -5,7 +5,7 @@ inputs:
   LATES_BUILS_NUMBER:
     description: "Current tag version"
     required: true
-  RELEASE_TYPE:
+  TYPE:
     description: "Type of release"
     required: true
     default: "minor"
@@ -23,7 +23,7 @@ runs:
         #!/bin/bash
         set -e
 
-        echo "RELEASE_TYPE name: ${{ inputs.RELEASE_TYPE }}"
+        echo "RELEASE_TYPE name: ${{ inputs.TYPE }}"
         echo "LATES_BUILS_NUMBER type: ${{ inputs.LATES_BUILS_NUMBER }}"
 
         # Extract major, minor, and patch from the branch name
@@ -36,7 +36,7 @@ runs:
         fi
 
         # Increment version based on release type
-        case "${{ inputs.RELEASE_TYPE }}" in
+        case "${{ inputs.TYPE }}" in
           major)
             major=$((major + 1))
             minor=0
