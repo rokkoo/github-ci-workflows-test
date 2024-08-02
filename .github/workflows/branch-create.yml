@@ -24,6 +24,6 @@ jobs:
       - name: Create release branch
         run: |
           git checkout -b release/${{ github.event.inputs.branch_name }}
-          git push origin ${{ github.event.inputs.branch_name }}
+          git push origin release/${{ github.event.inputs.branch_name }}
         env:
           SECRET: ${{ secrets.GH_SECRET }}
