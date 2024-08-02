@@ -23,7 +23,7 @@ jobs:
 
       - name: Create new branch
         run: |
-          chmod +x your_script.sh          
+          chmod +x create-branch.sh        
           ./create-branch.sh
         env:
           BRANCH_NAME: ${{ github.event.inputs.branch_name }}
