@@ -6,7 +6,7 @@ on:
       branch_name:
         description: "Nombre de la nueva rama"
         required: true
-        default: "release/"
+        default: "1.0.0"
 
 jobs:
   create-branch:
@@ -21,16 +21,9 @@ jobs:
           git config --global user.name "test"
           git config --global user.email "test@test.com"
 
-      - name: Generate changelog
-        run: |
-          chmod +x create-branch.sh        
-          ./generate-changelog.sh
-        env:
-          SECRET: ${{ secrets.GH_SECRET }}
-
       - name: Create release branch
         run: |
-          git checkout -b ${{ github.event.inputs.branch_name }}
+          git checkout -b release/${{ github.event.inputs.branch_name }}
           git push origin ${{ github.event.inputs.branch_name }}
         env:
           SECRET: ${{ secrets.GH_SECRET }}
