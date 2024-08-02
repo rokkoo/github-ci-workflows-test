@@ -10,18 +10,20 @@ runs:
         #!/bin/bash
         set -e
 
-        # Get the latest release branch based on version
+        # Get the latest release tag based on version
         latest_tag=$(git tag | grep '^release/' | sort -V | tail -n 1)
+
+        # Check if a release tag was found
+        if [ -z "$latest_tag" ]; then
+          echo "No release tag found."
+          echo "LATEST_BRANCH=" >> $GITHUB_ENV
+          exit 1
+        fi
 
         # Extract just the version part
         version_number=$(echo "$latest_tag" | sed 's/^release\///')
 
-        # Set the default branch if no release branch exists
-        # if [ -z "$version_number" ]; then
-        #   echo "No release branch found."
-        #   exit 1
-        # fi
-
-        echo "Latest release branch: ${version}"
+        # Print and set the environment variable
+        echo "Latest release tag: $latest_tag"
         echo "LATEST_BRANCH=${version_number}" >> $GITHUB_ENV
       shell: bash
