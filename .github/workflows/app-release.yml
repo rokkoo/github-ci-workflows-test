@@ -36,7 +36,7 @@ jobs:
           chmod +x validate-release-version.sh        
           ./validate-release-version.sh
         env:
-          BRANCH_NAME: $BRANCH_NAME
+          BRANCH_NAME: ${{ github.event.inputs.branch_name }}
 
       - name: Increment version based on release type
         id: increment-version
