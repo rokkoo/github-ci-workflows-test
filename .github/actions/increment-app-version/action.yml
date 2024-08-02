@@ -23,8 +23,8 @@ runs:
         #!/bin/bash
         set -e
 
-        echo "Branch name: ${{ inputs.RELEASE_TYPE }}"
-        echo "Release type: ${{ inputs.LATES_BUILS_NUMBER }}"
+        echo "RELEASE_TYPE name: ${{ inputs.RELEASE_TYPE }}"
+        echo "LATES_BUILS_NUMBER type: ${{ inputs.LATES_BUILS_NUMBER }}"
 
         # Extract major, minor, and patch from the branch name
         IFS='.' read -r major minor patch <<< "${{ inputs.LATES_BUILS_NUMBER }}"
@@ -50,7 +50,7 @@ runs:
             patch=$((patch + 1))
             ;;
           *)
-            echo "Invalid releaseType value. Expected 'major', 'minor', or 'patch'."
+            echo "Invalid RELEASE_TYPE value. Expected 'major', 'minor', or 'patch'."
             exit 1
             ;;
         esac
