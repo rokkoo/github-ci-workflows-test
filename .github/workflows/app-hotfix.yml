@@ -71,6 +71,8 @@ jobs:
           # Push the hotfix changes to the hotfix branch
           git push origin ${{ github.event.inputs.hotfixBranch }}
         shell: bash
+        env:
+          SECRET: ${{ secrets.GH_SECRET }}
 
   merge-hotfix:
     needs: apply-hotfix
@@ -95,6 +97,8 @@ jobs:
           # Push the changes to main
           git push origin main
         shell: bash
+        env:
+          SECRET: ${{ secrets.GH_SECRET }}
 
       - name: Create new tag for the hotfix
         run: |
@@ -109,6 +113,8 @@ jobs:
 
           echo "New hotfix tag created: $NEW_TAG"
         shell: bash
+        env:
+          SECRET: ${{ secrets.GH_SECRET }}
 
       - name: Delete hotfix branch
         run: |
@@ -121,3 +127,5 @@ jobs:
           git branch -d "$HOTFIX_BRANCH"
           git push origin --delete "$HOTFIX_BRANCH"
         shell: bash
+        env:
+          SECRET: ${{ secrets.GH_SECRET }}
