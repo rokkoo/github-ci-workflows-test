@@ -36,13 +36,13 @@ jobs:
       - name: Check if branch exists
         id: check-branch
         run: |
-          git fetch --all
-
           if git branch --list "$BRANCH_NAME" || git branch -r --list "origin/$BRANCH_NAME"; then
-            echo "Branch '$BRANCH_NAME' already exists."
+            echo "Branch '${BRANCH_NAME}' already exists."
+            echo "exists=true" >> $GITHUB_ENV
             exit 1
           else
-            echo "Branch '$BRANCH_NAME' does not exist."
+            echo "Branch '${BRANCH_NAME}' does not exist."
+            echo "exists=false" >> $GITHUB_ENV
           fi
 
       - name: Create release branch
