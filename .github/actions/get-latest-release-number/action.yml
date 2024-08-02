@@ -13,8 +13,6 @@ runs:
         #!/bin/bash
         set -e
 
-        git log
-
         # Get the latest release tag based on version
         latest_tag=$(git tag | grep '^release/' | sort -V | tail -n 1)
         echo "Latest tag found: $latest_tag"
