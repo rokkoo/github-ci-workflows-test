@@ -11,14 +11,10 @@ runs:
         set -e
 
         # Get the latest release branch based on version
-        # v. prefix
-        # latest_tag=$(git tag --list 'v*' | sort -V | tail -n 1)
         latest_tag=$(git tag | grep '^release/' | sort -V | tail -n 1)
 
         # Extract just the version part
         version_number=$(echo "$latest_tag" | sed 's/^release\///')
-
-        echo "Latest release branch: ${latest_tag} ${version_number}"
 
         # Set the default branch if no release branch exists
         if [ -z "$version_number" ]; then
