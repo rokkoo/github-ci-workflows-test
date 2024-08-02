@@ -24,10 +24,10 @@ runs:
         set -e
 
         echo "RELEASE_TYPE name: ${{ inputs.TYPE }}"
-        echo "LATES_BUILS_NUMBER type: ${{ inputs.LATES_BUILS_NUMBER }}"
+        echo "LATES_BUILS_NUMBER type: ${{ inputs.LATEST_BUILD_NUMBER }}"
 
         # Extract major, minor, and patch from the branch name
-        IFS='.' read -r major minor patch <<< "${{ inputs.LATES_BUILS_NUMBER }}"
+        IFS='.' read -r major minor patch <<< "${{ inputs.LATEST_BUILD_NUMBER }}"
 
         # Check if the extraction was successful
         if [[ -z "$major" || -z "$minor" || -z "$patch" ]]; then
