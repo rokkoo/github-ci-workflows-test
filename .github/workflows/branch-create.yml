@@ -9,7 +9,7 @@ on:
         default: "1.0.0"
 
 jobs:
-  create-branch:
+  generate-app-release:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,8 +28,11 @@ jobs:
         env:
           BRANCH_NAME: ${{ github.event.inputs.branch_name }}
 
+          # check if the branch already exists
       - name: Create release branch
         run: |
+          git fetch
+
           git checkout -b release/${{ github.event.inputs.branch_name }}
           git push origin release/${{ github.event.inputs.branch_name }}
         env:
