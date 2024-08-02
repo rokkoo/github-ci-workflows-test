@@ -2,7 +2,7 @@ name: Increment Version
 description: Increment version based on release type
 
 inputs:
-  LATES_BUILS_NUMBER:
+  LATEST_BUILD_NUMBER:
     description: "Current tag version"
     required: true
   TYPE:
@@ -24,7 +24,7 @@ runs:
         set -e
 
         echo "RELEASE_TYPE name: ${{ inputs.TYPE }}"
-        echo "LATES_BUILS_NUMBER type: ${{ inputs.LATEST_BUILD_NUMBER }}"
+        echo "LATEST_BUILD_NUMBER type: ${{ inputs.LATEST_BUILD_NUMBER }}"
 
         # Extract major, minor, and patch from the branch name
         IFS='.' read -r major minor patch <<< "${{ inputs.LATEST_BUILD_NUMBER }}"
