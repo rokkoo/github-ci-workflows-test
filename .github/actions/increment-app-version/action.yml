@@ -29,7 +29,7 @@ runs:
         echo "Release type: ${{ inputs.release_type }}"
 
         # Extract major, minor, and patch from the branch name
-        IFS='.' read -r major minor patch <<< "${{ inputs.branch_name#release/ }}"
+        IFS='.' read -r major minor patch <<< "${{ inputs.branch_name }}#release/"
 
         # Check if the extraction was successful
         if [[ -z "$major" || -z "$minor" || -z "$patch" ]]; then
