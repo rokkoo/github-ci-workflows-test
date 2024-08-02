@@ -10,6 +10,8 @@ runs:
     - name: Get Latest Release Number
       id: get-latest-release-number
       run: |
+        echo "Listing all tags:"
+        git tag
         git tag | grep '^release/' | sort -V | tail -n 1
         # Get the latest release tag based on version
         # latest_tag=$(git tag | grep '^release/' | sort -V | tail -n 1)
