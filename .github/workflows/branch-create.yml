@@ -33,10 +33,13 @@ jobs:
         run: |
           echo "BRANCH_NAME=release/${{ github.event.inputs.branch_name }}" >> $GITHUB_ENV
 
+      - name: Fetch all branches
+        run: git fetch --all
+
       - name: Check if branch exists
         id: check-branch
         run: |
-          if git branch --list "$BRANCH_NAME" || git branch -r --list "origin/$BRANCH_NAME"; then
+          if git show-ref --quiet refs/heads/"$BRANCH_NAME" || git show-ref --quiet refs/remotes/origin/"$BRANCH_NAME"; then
             echo "Branch '${BRANCH_NAME}' already exists."
             echo "exists=true" >> $GITHUB_ENV
             exit 1
