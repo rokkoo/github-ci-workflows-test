@@ -45,7 +45,7 @@ jobs:
         id: increment-version
         uses: ./.github/actions/increment-app-version
         with:
-          LATES_BUILS_NUMBER: $LATEST_BRANCH
+          LATEST_BUILD_NUMBER: ${{ env.LATEST_BRANCH }}
           TYPE: ${{ github.event.inputs.releaseType }}
 
       - name: Fetch all branches
