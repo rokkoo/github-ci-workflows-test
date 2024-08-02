@@ -33,17 +33,19 @@ jobs:
           # v. prefix
           # latest_tag=$(git tag --list 'v*' | sort -V | tail -n 1)
           latest_tag=$(git tag --list 'release/*' | sort -V | tail -n 1)
+          # Extract just the version part
+          version=${latest_tag#release/}
 
-          echo "Latest release branch: ${latest_branch}"
+          echo "Latest release branch: ${version}"
 
           # Set the default branch if no release branch exists
-          if [ -z "$latest_tag" ]; then
+          if [ -z "$version" ]; then
             echo "No release branch found."
             exit 1
           fi
 
-          echo "Latest release branch: ${latest_tag}"
-          echo "LATEST_BRANCH=${latest_tag}" >> $GITHUB_ENV
+          echo "Latest release branch: ${version}"
+          echo "LATEST_BRANCH=${version}" >> $GITHUB_ENV
 
       - name: validate release version
         run: |
