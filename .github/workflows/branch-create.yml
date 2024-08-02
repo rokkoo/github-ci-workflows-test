@@ -1,4 +1,4 @@
-name: create-new-branch
+name: generate-app-release
 
 on:
   workflow_dispatch:
@@ -21,9 +21,9 @@ jobs:
           git config --global user.name "test"
           git config --global user.email "test@test.com"
 
-      - name: Create new branch
+      - name: validate release version
         run: |
-          chmod +x create-branch.sh        
+          chmod +x validate-release-version.sh        
           ./validate-release-version.sh
         env:
           BRANCH_NAME: ${{ github.event.inputs.branch_name }}
