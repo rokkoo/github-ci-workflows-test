@@ -1,29 +1,40 @@
 name: Get Latest Release Number
 description: Get the latest release number from the repository
 
-runs:
-  using: "composite"
-  steps:
-    - name: Get Latest Release Number
-      id: get-latest-release-number
-      run: |
-        #!/bin/bash
-        set -e
+on: [push] # O cualquier otro evento que quieras activar el flujo de trabajo
 
-        # Get the latest release tag based on version
-        latest_tag=$(git tag | grep '^release/' | sort -V | tail -n 1)
+jobs:
+  get-latest-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-        # Check if a release tag was found
-        if [ -z "$latest_tag" ]; then
-          echo "No release tag found."
-          echo "LATEST_BRANCH=" >> $GITHUB_ENV
-          exit 1
-        fi
+      - name: Get Latest Release Number
+        id: get-latest-release-number
+        run: |
+          #!/bin/bash
+          set -e
 
-        # Extract just the version part
-        version_number=$(echo "$latest_tag" | sed 's/^release\///')
+          # List all tags for debugging
+          echo "Listing all tags:"
+          git tag
 
-        # Print and set the environment variable
-        echo "Latest release tag: $latest_tag"
-        echo "LATEST_BRANCH=${version_number}" >> $GITHUB_ENV
-      shell: bash
+          # Get the latest release tag based on version
+          latest_tag=$(git tag | grep '^release/' | sort -V | tail -n 1)
+          echo "Latest tag found: $latest_tag"
+
+          # Check if a release tag was found
+          if [ -z "$latest_tag" ]; then
+            echo "No release tag found."
+            echo "LATEST_BRANCH=" >> $GITHUB_ENV
+            exit 1
+          fi
+
+          # Extract just the version part
+          version_number=$(echo "$latest_tag" | sed 's/^release\///')
+          echo "Version number extracted: $version_number"
+
+          # Set the environment variable
+          echo "LATEST_BRANCH=${version_number}" >> $GITHUB_ENV
+        shell: bash
