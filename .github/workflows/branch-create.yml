@@ -34,8 +34,20 @@ jobs:
       - name: Increment version based on release type
         id: increment-version
         run: |
-          IFS='.' read -r major minor patch <<< "${BRANCH_NAME}"
+          echo "Current branch name: ${BRANCH_NAME}"
 
+          # Extract major, minor, and patch from the branch name
+          IFS='.' read -r major minor patch <<< "${BRANCH_NAME#release/}"
+
+          # Check if the extraction was successful
+          if [[ -z "$major" || -z "$minor" || -z "$patch" ]]; then
+            echo "Failed to parse version from branch name."
+            exit 1
+          fi
+
+          echo "Extracted version: major=${major}, minor=${minor}, patch=${patch}"
+
+          # Increment version based on release type
           case "${RELEASE_TYPE}" in
             major)
               major=$((major + 1))
@@ -57,6 +69,7 @@ jobs:
 
           NEW_BRANCH_NAME="release/${major}.${minor}.${patch}"
           echo "NEW_BRANCH_NAME=${NEW_BRANCH_NAME}" >> $GITHUB_ENV
+          echo "New branch name: ${NEW_BRANCH_NAME}"
 
       - name: Fetch all branches
         run: git fetch --all
