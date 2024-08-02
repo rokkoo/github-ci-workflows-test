@@ -1,8 +1,6 @@
 name: Get Latest Release Number
 description: Get the latest release number from the repository
 
-on: [push] # O cualquier otro evento que quieras activar el flujo de trabajo
-
 jobs:
   get-latest-release:
     runs-on: ubuntu-latest

@@ -1,6 +1,10 @@
 name: generate-app-release
 
 on:
+  push:
+    tags:
+      - release
+    branches: [main]
   workflow_dispatch:
     inputs:
       releaseType:
