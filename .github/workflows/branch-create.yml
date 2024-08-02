@@ -22,7 +22,9 @@ jobs:
           git config --global user.email "test@test.com"
 
       - name: Create new branch
-        run: ./create-branch.sh
+        run: |
+          chmod +x your_script.sh          
+          ./create-branch.sh
         env:
           BRANCH_NAME: ${{ github.event.inputs.branch_name }}
           SECRET: ${{ secrets.GH_SECRET }}
