@@ -36,7 +36,7 @@ jobs:
           # Extract just the version part
           version=${latest_tag#release/}
 
-          echo "Latest release branch: ${version}"
+          echo "Latest release branch: ${latest_tag} ${version}"
 
           # Set the default branch if no release branch exists
           if [ -z "$version" ]; then
