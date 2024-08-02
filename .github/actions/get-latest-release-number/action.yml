@@ -12,24 +12,23 @@ runs:
     - name: Get Latest Release Number
       id: get-latest-release-number
       run: |
-        echo "Listing all tags:"
-        git tag
-        git tag | grep '^release/' | sort -V | tail -n 1
+
+        # git tag | grep '^release/' | sort -V | tail -n 1
         # Get the latest release tag based on version
-        # latest_tag=$(git tag | grep '^release/' | sort -V | tail -n 1)
+        latest_tag=$(git tag | grep '^release/' | sort -V | tail -n 1)
         # echo "Latest tag found: $latest_tag"
 
-        # # Check if a release tag was found
-        # if [ -z "$latest_tag" ]; then
-        #   echo "No release tag found."
-        #   echo "LATEST_BRANCH=" >> $GITHUB_ENV
-        #   exit 1
-        # fi
+        # Check if a release tag was found
+        if [ -z "$latest_tag" ]; then
+          echo "No release tag found."
+          echo "LATEST_BRANCH=" >> $GITHUB_ENV
+          exit 1
+        fi
 
-        # # Extract just the version part
-        # version_number=$(echo "$latest_tag" | sed 's/^release\///')
-        # echo "Version number extracted: $version_number"
+        # Extract just the version part
+        version_number=$(echo "$latest_tag" | sed 's/^release\///')
+        echo "Version number extracted: $version_number"
 
-        # # Set the environment variable
-        # echo "LATEST_BRANCH=${version_number}" >> $GITHUB_ENV
+        # Set the environment variable
+        echo "LATEST_BRANCH=${version_number}" >> $GITHUB_ENV
       shell: bash
