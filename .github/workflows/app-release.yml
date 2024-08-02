@@ -35,12 +35,11 @@ jobs:
 
           # Set the default branch if no release branch exists
           if [ -z "$latest_branch" ]; then
-            echo "No release branch found.
+            echo "No release branch found."
             exit 1
           fi
 
           echo "Latest release branch: ${latest_branch}"
-
           echo "LATEST_BRANCH=${latest_branch}" >> $GITHUB_ENV
 
       - name: validate release version
