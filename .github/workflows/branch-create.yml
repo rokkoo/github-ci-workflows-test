@@ -4,9 +4,18 @@ on:
   workflow_dispatch:
     inputs:
       branch_name:
-        description: "Nombre de la nueva rama"
+        description: "Current version branch name"
         required: true
         default: "1.0.0"
+      releaseType:
+        description: "Release version type"
+        required: true
+        default: "minor"
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
 
 jobs:
   generate-app-release:
@@ -16,22 +25,38 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: validate release version
-        run: |
-          chmod +x validate-release-version.sh        
-          ./validate-release-version.sh
-        env:
-          BRANCH_NAME: ${{ github.event.inputs.branch_name }}
-
-      - name: Setup Git
-        run: |
-          git config --global user.name "test"
-          git config --global user.email "test@test.com"
-
-      - name: Se  t up environment variables
+      - name: Set up environment variables
         id: setup-env
         run: |
-          echo "BRANCH_NAME=release/${{ github.event.inputs.branch_name }}" >> $GITHUB_ENV
+          echo "BRANCH_NAME=${{ github.event.inputs.branch_name }}" >> $GITHUB_ENV
+          echo "RELEASE_TYPE=${{ github.event.inputs.releaseType }}" >> $GITHUB_ENV
+
+      - name: Increment version based on release type
+        id: increment-version
+        run: |
+          IFS='.' read -r major minor patch <<< "${BRANCH_NAME}"
+
+          case "${RELEASE_TYPE}" in
+            major)
+              major=$((major + 1))
+              minor=0
+              patch=0
+              ;;
+            minor)
+              minor=$((minor + 1))
+              patch=0
+              ;;
+            patch)
+              patch=$((patch + 1))
+              ;;
+            *)
+              echo "Invalid releaseType value. Expected 'major', 'minor', or 'patch'."
+              exit 1
+              ;;
+          esac
+
+          NEW_BRANCH_NAME="release/${major}.${minor}.${patch}"
+          echo "NEW_BRANCH_NAME=${NEW_BRANCH_NAME}" >> $GITHUB_ENV
 
       - name: Fetch all branches
         run: git fetch --all
@@ -39,16 +64,16 @@ jobs:
       - name: Check if branch exists
         id: check-branch
         run: |
-          if git show-ref --quiet refs/heads/"$BRANCH_NAME" || git show-ref --quiet refs/remotes/origin/"$BRANCH_NAME"; then
-            echo "Branch '${BRANCH_NAME}' already exists."
+          if git show-ref --quiet refs/heads/"$NEW_BRANCH_NAME" || git show-ref --quiet refs/remotes/origin/"$NEW_BRANCH_NAME"; then
+            echo "Branch '${NEW_BRANCH_NAME}' already exists."
             exit 1
           else
-            echo "Branch '${BRANCH_NAME}' does not exist."
+            echo "Branch '${NEW_BRANCH_NAME}' does not exist."
           fi
 
       - name: Create release branch
         run: |
-          git checkout -b $BRANCH_NAME
-          git push origin $BRANCH_NAME
+          git checkout -b $NEW_BRANCH_NAME
+          git push origin $NEW_BRANCH_NAME
         env:
           SECRET: ${{ secrets.GH_SECRET }}
