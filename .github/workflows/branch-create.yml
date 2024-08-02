@@ -36,10 +36,9 @@ jobs:
 
           if git branch --list "$branch_name" || git branch -r --list "origin/$branch_name"; then
             echo "Branch '${branch_name}' already exists."
-            echo "exists=true" >> $GITHUB_ENV
+            exit 1
           else
             echo "Branch '${branch_name}' does not exist."
-            echo "exists=false" >> $GITHUB_ENV
           fi
 
       - name: Create release branch
