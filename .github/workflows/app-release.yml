@@ -34,7 +34,7 @@ jobs:
         id: get-latest-release-number
         uses: ./.github/actions/get-latest-release-number
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_SECRET }}
+          SECRET: ${{ secrets.GH_SECRET }}
 
       - name: validate release version
         run: |

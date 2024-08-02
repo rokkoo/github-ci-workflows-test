@@ -13,10 +13,6 @@ runs:
         #!/bin/bash
         set -e
 
-        # List all tags for debugging
-        echo "Listing all tags:"
-        git tag
-
         # Get the latest release tag based on version
         latest_tag=$(git tag | grep '^release/' | sort -V | tail -n 1)
         echo "Latest tag found: $latest_tag"
