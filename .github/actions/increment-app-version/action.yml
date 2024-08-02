@@ -61,5 +61,5 @@ runs:
         echo "New branch name: ${NEW_BRANCH_NAME}"
 
         # Set output
-        echo "NEW_BRANCH_NAME=${NEW_BRANCH_NAME}" >> $GITHUB_ENV
+        echo "NEW_BRANCH_NAME=release/${NEW_BRANCH_NAME}" >> $GITHUB_ENV
       shell: bash
