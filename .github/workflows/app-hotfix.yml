@@ -10,6 +10,9 @@ on:
         description: "Name of the hotfix branch"
         required: true
 
+permissions:
+  contents: write # Permite escribir en los contenidos del repositorio
+
 jobs:
   create-hotfix:
     runs-on: ubuntu-latest
