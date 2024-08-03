@@ -44,6 +44,13 @@ jobs:
             exit 1
           fi
 
+      - name: Set git user
+        run: |
+          #!/bin/bash
+          set -e
+          git config --global user.email "bot@app.com"
+          git config --global user.name "bot"
+
       - name: Create hotfix branch
         run: |
           #!/bin/bash
