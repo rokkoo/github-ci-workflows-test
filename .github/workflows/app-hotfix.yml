@@ -51,6 +51,18 @@ jobs:
 
           # Create a new branch from the tag
           git checkout -b $HOTFIX_BRANCH $TAG_NAME
+
+      - name: bump app version
+        run: |
+          #!/bin/bash
+          set -e
+          echo "hello world" > "document.md"
+          git commit -m "document.md"
+
+      - name: push hotfix branch
+        run: |
+          #!/bin/bash
+          set -e
           git push origin $HOTFIX_BRANCH
 
       - name: Create Pull Request
