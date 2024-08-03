@@ -39,6 +39,7 @@ jobs:
           fi
         env:
           SECRET: ${{ secrets.GH_SECRET }}
+          GITHUB_TOKEN: ${{ secrets.GH_SECRET }}
 
       - name: Create hotfix branch
         run: |
@@ -50,6 +51,7 @@ jobs:
           git push origin $HOTFIX_BRANCH
         env:
           SECRET: ${{ secrets.GH_SECRET }}
+          GITHUB_TOKEN: ${{ secrets.GH_SECRET }}
 
   merge-hotfix:
     needs: create-hotfix
