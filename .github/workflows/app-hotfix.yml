@@ -9,6 +9,7 @@ on:
       hotfixBranch:
         description: "Name of the hotfix branch"
         required: true
+        default: "hotfix/"
 
 jobs:
   create-hotfix:
