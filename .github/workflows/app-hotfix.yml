@@ -71,6 +71,7 @@ jobs:
         run: |
           #!/bin/bash
           set -e
+          git pull origin $HOTFIX_BRANCH
           git push origin $HOTFIX_BRANCH
 
       - name: Create Pull Request
