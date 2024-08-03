@@ -10,10 +10,6 @@ on:
         description: "Name of the hotfix branch"
         required: true
 
-permissions:
-  contents: write # Permite crear y actualizar ramas y PRs
-  pull-requests: write # Permite crear y actualizar PRs
-
 jobs:
   create-hotfix:
     runs-on: ubuntu-latest

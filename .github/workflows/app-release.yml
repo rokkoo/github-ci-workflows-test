@@ -13,10 +13,6 @@ on:
           - minor
           - patch
 
-permissions:
-  contents: write # Permite crear y actualizar ramas y PRs
-  pull-requests: write # Permite crear y actualizar PRs
-
 jobs:
   generate-app-release:
     runs-on: ubuntu-latest
