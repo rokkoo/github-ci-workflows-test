@@ -10,17 +10,18 @@ on:
         description: "Name of the hotfix branch"
         required: true
 
-permissions:
-  contents: write # Permite escribir en los contenidos del repositorio
-
 jobs:
   create-hotfix:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GH_SECRET }}
 
       - name: Set up environment variables
         id: setup-env
@@ -42,7 +43,6 @@ jobs:
           fi
         env:
           SECRET: ${{ secrets.GH_SECRET }}
-          GITHUB_TOKEN: ${{ secrets.GH_SECRET }}
 
       - name: Create hotfix branch
         run: |
@@ -54,7 +54,6 @@ jobs:
           git push origin $HOTFIX_BRANCH
         env:
           SECRET: ${{ secrets.GH_SECRET }}
-          GITHUB_TOKEN: ${{ secrets.GH_SECRET }}
 
   merge-hotfix:
     needs: create-hotfix
