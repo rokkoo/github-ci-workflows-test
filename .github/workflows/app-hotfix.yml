@@ -42,11 +42,9 @@ jobs:
           #!/bin/bash
           set -e
 
-          TAG_NAME="${{ github.event.inputs.tagName }}"
-          HOTFIX_BRANCH="${{ github.event.inputs.hotfixBranch }}"
-
           # Create a new branch from the tag
           git checkout -b "$HOTFIX_BRANCH" "$TAG_NAME"
+          git push origin $HOTFIX_BRANCH
         env:
           SECRET: ${{ secrets.GH_SECRET }}
 
