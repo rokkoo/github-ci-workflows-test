@@ -53,6 +53,17 @@ jobs:
           git checkout -b $HOTFIX_BRANCH $TAG_NAME
           git push origin $HOTFIX_BRANCH
 
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ env.HOTFIX_BRANCH }}
+          base: main
+          title: "Hotfix: ${{ env.HOTFIX_BRANCH }}"
+          body: |
+            This PR is created automatically by the GitHub Action workflow.
+            - Hotfix branch: ${{ env.HOTFIX_BRANCH }}
+
   remove-hotfix-branch:
     needs: create-hotfix
     runs-on: ubuntu-latest
@@ -67,6 +78,7 @@ jobs:
           echo "HOTFIX_BRANCH=${{ github.event.inputs.hotfixBranch }}" >> $GITHUB_ENV
 
       # we need to create new tag for the hotfix branch
+      # git tag "release/1.0.0" && git push --tags
 
       - name: Delete hotfix branch
         run: |
@@ -80,5 +92,5 @@ jobs:
           fi
 
           # Delete the hotfix branch locally and remotely
-          git push origin --delete $HOTFIX_BRANCH
+          # git push origin --delete $HOTFIX_BRANCH
         shell: bash
