@@ -42,8 +42,6 @@ jobs:
             echo "Tag $TAG_NAME does not exist. Exiting."
             exit 1
           fi
-        env:
-          SECRET: ${{ secrets.GH_SECRET }}
 
       - name: Create hotfix branch
         run: |
@@ -53,10 +51,8 @@ jobs:
           # Create a new branch from the tag
           git checkout -b $HOTFIX_BRANCH $TAG_NAME
           git push origin $HOTFIX_BRANCH
-        env:
-          SECRET: ${{ secrets.GH_SECRET }}
 
-  merge-hotfix:
+  remove-hotfix-branch:
     needs: create-hotfix
     runs-on: ubuntu-latest
     steps:
@@ -75,6 +71,12 @@ jobs:
         run: |
           #!/bin/bash
           set -e
+
+          # Ensure we are not deleting the main branch
+          if [ "$HOTFIX_BRANCH" == "main" ]; then
+            echo "Cannot delete the main branch."
+            exit 1
+          fi
 
           # Delete the hotfix branch locally and remotely
           git push origin --delete $HOTFIX_BRANCH
