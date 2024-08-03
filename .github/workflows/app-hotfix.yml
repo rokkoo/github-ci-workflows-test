@@ -43,7 +43,6 @@ jobs:
         shell: bash
         env:
           SECRET: ${{ secrets.GH_SECRET }}
-          GITHUB_TOKEN: ${{ secrets.GH_SECRET }}
 
   apply-hotfix:
     needs: create-hotfix
