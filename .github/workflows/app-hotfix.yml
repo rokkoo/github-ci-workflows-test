@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Create hotfix branch from tag
+      - name: Validate tag and create hotfix branch
         run: |
           #!/bin/bash
           set -e
@@ -34,13 +34,19 @@ jobs:
             echo "Tag $TAG_NAME does not exist. Exiting."
             exit 1
           fi
+        env:
+          SECRET: ${{ secrets.GH_SECRET }}
 
-          # Create and checkout the hotfix branch from the tag
-          git checkout -b $HOTFIX_BRANCH $TAG_NAME
+      - name: Create hotfix branch
+        run: |
+          #!/bin/bash
+          set -e
 
-          # Push the hotfix branch to the remote repository
-          git push origin $HOTFIX_BRANCH
-        shell: bash
+          TAG_NAME="${{ github.event.inputs.tagName }}"
+          HOTFIX_BRANCH="${{ github.event.inputs.hotfixBranch }}"
+
+          # Create a new branch from the tag
+          git checkout -b "$HOTFIX_BRANCH" "$TAG_NAME"
         env:
           SECRET: ${{ secrets.GH_SECRET }}
 
