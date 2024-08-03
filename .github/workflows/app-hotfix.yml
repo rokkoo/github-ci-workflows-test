@@ -71,6 +71,7 @@ jobs:
         run: |
           #!/bin/bash
           set -e
+          git config pull.rebase false  # merge (the default strategy)
           git pull origin $HOTFIX_BRANCH
           git push origin $HOTFIX_BRANCH
 
