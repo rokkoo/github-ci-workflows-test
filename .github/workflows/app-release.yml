@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        env:
+          SECRET: ${{ secrets.GH_SECRET }}
 
       - name: Set up environment variables
         id: setup-env
@@ -29,8 +31,6 @@ jobs:
       - name: Get Latest Release Number
         id: get-latest-release-number
         uses: ./.github/actions/get-latest-release-number
-        env:
-          SECRET: ${{ secrets.GH_SECRET }}
 
       - name: validate release version
         run: |
@@ -67,9 +67,6 @@ jobs:
       - name: Create release branch
         run: |
           git checkout -b $NEW_BRANCH_NAME
-          git push origin $NEW_BRANCH_NAME
-        env:
-          SECRET: ${{ secrets.GH_SECRET }}
 
       - name: bump app version
         run: |
