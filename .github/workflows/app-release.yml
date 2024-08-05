@@ -70,7 +70,7 @@ jobs:
           token: ${{ secrets.GH_SECRET }}
           branch: ${{ env.NEW_BRANCH_NAME }}
           base: main
-          title: "New release: ${{ env.NEW_BRANCH_NAME }}"
+          title: "New release: ${{ env.LATEST_BRANCH }}"
           body: |
             This PR is created automatically by the GitHub Action workflow.
             - New release branch: ${{ env.NEW_BRANCH_NAME }}
