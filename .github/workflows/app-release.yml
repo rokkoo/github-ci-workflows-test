@@ -34,7 +34,7 @@ jobs:
 
       - name: validate release version
         run: |
-          # chmod +x validate-release-version.sh
+          chmod +x validate-release-version.sh
           ./validate-release-version.sh
 
       - name: Increment version based on release type
