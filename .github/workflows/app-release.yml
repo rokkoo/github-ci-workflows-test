@@ -34,7 +34,7 @@ jobs:
 
       - name: validate release version
         run: |
-          chmod +x validate-release-version.sh
+          # chmod +x validate-release-version.sh
           ./validate-release-version.sh
 
       - name: Increment version based on release type
@@ -63,6 +63,22 @@ jobs:
           git push origin $NEW_BRANCH_NAME
         env:
           SECRET: ${{ secrets.GH_SECRET }}
+
+      - name: bump app version
+        run: |
+          #!/bin/bash
+          set -e
+          echo "hello world" > "document.md"
+          git add document.md
+          git commit -m "document.md"
+
+      - name: bump app version
+        run: |
+          #!/bin/bash
+          set -e
+          echo "hello world" > "document.md"
+          git add document.md
+          git commit -m "document.md"
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
